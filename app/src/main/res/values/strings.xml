@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">To Do List</string>
     <string name="save_task_button_text">Add Task</string>
+    <string name="delete_button">Delete Task</string>
 </resources>

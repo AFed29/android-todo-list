@@ -58,7 +58,7 @@ public class ToDoListActivity extends AppCompatActivity {
     public void onCompletedChanged(View view) {
         Task task = (Task) view.getTag();
         task.flipCompleted();
-        taskDbHelper.updateCompleted(task);
+        taskDbHelper.update(task);
         refreshUI();
     }
 }

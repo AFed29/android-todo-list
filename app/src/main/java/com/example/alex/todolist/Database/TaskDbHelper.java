@@ -51,14 +51,25 @@ public class TaskDbHelper extends DBHelper {
         return tasks;
     }
 
-    public void updateCompleted(Task task) {
+    public void update(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(TaskContract.COLUMN_NAME_TASKNAME, task.getTaskName());
+        values.put(TaskContract.COLUMN_NAME_DESCRIPTION, task.getDescription());
         values.put(TaskContract.COLUMN_NAME_COMPLETED, task.getCompleted());
 
         String selection = TaskContract._ID + " LIKE ?";
         String[] selectionArgs = { task.getId().toString() };
 
         db.update(TaskContract.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void deleteOne(Task task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = TaskContract._ID + " LIKE ?";
+        String[] selectionArgs = { task.getId().toString() };
+
+        db.delete(TaskContract.TABLE_NAME, selection, selectionArgs);
     }
 }
