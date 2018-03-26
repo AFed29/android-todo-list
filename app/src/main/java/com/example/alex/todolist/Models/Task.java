@@ -44,4 +44,12 @@ public class Task implements Serializable {
     public void flipCompleted() {
         this.completed = !this.completed;
     }
+
+    public void setName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
