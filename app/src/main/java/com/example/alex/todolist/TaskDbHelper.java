@@ -36,13 +36,15 @@ public class TaskDbHelper extends DBHelper {
         ArrayList<Task> tasks = new ArrayList<>();
 
         while (cursor.moveToNext()) {
+            int id = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(ToDoListContract._ID));
             String taskName = cursor.getString(
                     cursor.getColumnIndexOrThrow(ToDoListContract.COLUMN_NAME_TASKNAME));
             String taskDescription = cursor.getString(
                     cursor.getColumnIndexOrThrow(ToDoListContract.COLUMN_NAME_DESCRIPTION));
             int completed = cursor.getInt(
                     cursor.getColumnIndexOrThrow(ToDoListContract.COLUMN_NAME_COMPLETED));
-            Task task = new Task(taskName, taskDescription, completed);
+            Task task = new Task(id, taskName, taskDescription, completed);
             tasks.add(task);
         }
         return tasks;

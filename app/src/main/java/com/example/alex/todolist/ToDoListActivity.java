@@ -12,37 +12,39 @@ import java.util.List;
 
 public class ToDoListActivity extends AppCompatActivity {
 
+    TaskDbHelper taskDbHelper;
+    ArrayList<Task> tasks;
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
 
-        TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-        ArrayList<Task> tasks;
-        tasks = taskDbHelper.selectAll();
-
-        TasksAdapter tasksAdapter = new TasksAdapter(this, tasks);
-
-        ListView listView = findViewById(R.id.task_list);
-        listView.setAdapter(tasksAdapter);
+        listView = findViewById(R.id.task_list);
+        taskDbHelper = new TaskDbHelper(this);
         }
 
+    @Override
     protected void onResume() {
         super.onResume();
 
-        TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-        ArrayList<Task> tasks;
         tasks = taskDbHelper.selectAll();
 
         TasksAdapter tasksAdapter = new TasksAdapter(this, tasks);
-
-        ListView listView = findViewById(R.id.task_list);
         listView.setAdapter(tasksAdapter);
     }
 
 
     public void onAddTaskButtonClicked(View view) {
         Intent intent = new Intent(this, AddTaskActivity.class);
+        startActivity(intent);
+    }
+
+    public void onTaskClicked(View listItem) {
+        Intent intent = new Intent(this, TaskInfoActivity.class);
+        Task task = (Task) listItem.getTag();
+        intent.putExtra("task", task);
         startActivity(intent);
     }
 
