@@ -1,4 +1,4 @@
-package com.example.alex.todolist;
+package com.example.alex.todolist.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
+import com.example.alex.todolist.Models.Task;
+import com.example.alex.todolist.R;
 
 import java.util.ArrayList;
 
@@ -28,9 +32,13 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         }
 
         TextView taskName = listItemView.findViewById(R.id.taskName);
+        ToggleButton completedToggle = listItemView.findViewById(R.id.completed_toggle);
+
         taskName.setText(currentTask.getTaskName());
+        completedToggle.setChecked(currentTask.getCompleted());
 
         listItemView.setTag(currentTask);
+        completedToggle.setTag(currentTask);
 
         return listItemView;
     }

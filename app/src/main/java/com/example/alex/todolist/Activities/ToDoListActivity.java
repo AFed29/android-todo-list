@@ -1,14 +1,17 @@
-package com.example.alex.todolist;
+package com.example.alex.todolist.Activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.alex.todolist.R;
+import com.example.alex.todolist.Models.Task;
+import com.example.alex.todolist.Database.TaskDbHelper;
+import com.example.alex.todolist.Adapters.TasksAdapter;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class ToDoListActivity extends AppCompatActivity {
 
@@ -29,12 +32,16 @@ public class ToDoListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        refreshUI();
+    }
+
+
+    public void refreshUI() {
         tasks = taskDbHelper.selectAll();
 
         TasksAdapter tasksAdapter = new TasksAdapter(this, tasks);
         listView.setAdapter(tasksAdapter);
     }
-
 
     public void onAddTaskButtonClicked(View view) {
         Intent intent = new Intent(this, AddTaskActivity.class);
@@ -48,5 +55,11 @@ public class ToDoListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onCompletedChanged(View view) {
+        Task task = (Task) view.getTag();
+        task.flipCompleted();
+        taskDbHelper.updateCompleted(task);
+        refreshUI();
+    }
 }
 

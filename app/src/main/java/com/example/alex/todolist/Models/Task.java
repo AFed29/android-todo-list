@@ -1,4 +1,4 @@
-package com.example.alex.todolist;
+package com.example.alex.todolist.Models;
 
 import java.io.Serializable;
 
@@ -33,4 +33,15 @@ public class Task implements Serializable {
         return description;
     }
 
+    public boolean getCompleted() {
+        return completed;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void flipCompleted() {
+        this.completed = !this.completed;
+    }
 }

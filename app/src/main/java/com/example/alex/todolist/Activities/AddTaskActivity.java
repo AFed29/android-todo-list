@@ -1,9 +1,13 @@
-package com.example.alex.todolist;
+package com.example.alex.todolist.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.alex.todolist.R;
+import com.example.alex.todolist.Models.Task;
+import com.example.alex.todolist.Database.TaskDbHelper;
 
 public class AddTaskActivity extends AppCompatActivity {
     EditText task_name;

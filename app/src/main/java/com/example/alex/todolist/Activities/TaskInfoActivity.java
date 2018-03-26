@@ -1,9 +1,12 @@
-package com.example.alex.todolist;
+package com.example.alex.todolist.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.alex.todolist.R;
+import com.example.alex.todolist.Models.Task;
 
 public class TaskInfoActivity extends AppCompatActivity {
     private TextView task_name;
