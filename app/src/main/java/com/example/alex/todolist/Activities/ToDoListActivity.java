@@ -3,9 +3,14 @@ package com.example.alex.todolist.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.alex.todolist.Adapters.TasksRecyclerAdapter;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
 import com.example.alex.todolist.Database.TaskDbHelper;
@@ -17,14 +22,15 @@ public class ToDoListActivity extends AppCompatActivity {
 
     TaskDbHelper taskDbHelper;
     ArrayList<Task> tasks;
-    ListView listView;
+    RecyclerView recyclerView;
+    TasksRecyclerAdapter tasksRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
 
-        listView = findViewById(R.id.task_list);
+        recyclerView = findViewById(R.id.tasks_list);
         taskDbHelper = new TaskDbHelper(this);
         }
 
@@ -39,8 +45,12 @@ public class ToDoListActivity extends AppCompatActivity {
     public void refreshUI() {
         tasks = taskDbHelper.selectAll();
 
-        TasksAdapter tasksAdapter = new TasksAdapter(this, tasks);
-        listView.setAdapter(tasksAdapter);
+        tasksRecyclerAdapter = new TasksRecyclerAdapter(tasks);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(tasksRecyclerAdapter);
+        
     }
 
     public void onAddTaskButtonClicked(View view) {
@@ -59,7 +69,7 @@ public class ToDoListActivity extends AppCompatActivity {
         Task task = (Task) view.getTag();
         task.flipCompleted();
         taskDbHelper.update(task);
-        refreshUI();
+        tasksRecyclerAdapter.notifyDataSetChanged();
     }
 }
 
