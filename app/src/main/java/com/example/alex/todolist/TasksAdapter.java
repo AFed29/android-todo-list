@@ -27,8 +27,8 @@ public class TasksAdapter extends ArrayAdapter<Task> {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.task_item, parent, false);
         }
 
-        TextView ranking = listItemView.findViewById(R.id.taskName);
-        ranking.setText(currentTask.getTaskName());
+        TextView taskName = listItemView.findViewById(R.id.taskName);
+        taskName.setText(currentTask.getTaskName());
 
         return listItemView;
     }
