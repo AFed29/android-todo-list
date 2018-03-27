@@ -18,7 +18,7 @@ public final class TaskContract implements BaseColumns  {
     static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TaskContract.TABLE_NAME + " (" +
                     TaskContract._ID + " INTEGER PRIMARY KEY," +
-                    TaskContract.COLUMN_NAME_TASKNAME + " TEXT," +
+                    TaskContract.COLUMN_NAME_TASKNAME + " TEXT NOT NULL," +
                     TaskContract.COLUMN_NAME_DESCRIPTION + " TEXT," +
                     TaskContract.COLUMN_NAME_COMPLETED + " INTEGER," +
                     TaskContract.COLUMN_NAME_PINNED + " INTEGER)";

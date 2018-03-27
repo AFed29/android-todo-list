@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
@@ -24,11 +25,15 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void onAddTaskButtonClick(View view) {
         String task_name_to_save = task_name.getText().toString();
-        String description_to_save = description.getText().toString();
-        Task task = new Task(task_name_to_save, description_to_save);
+        if (task_name_to_save.trim().equals("") || task_name_to_save.isEmpty()) {
+            Toast.makeText(this, "Please Enter a task name", Toast.LENGTH_LONG).show();
+        } else {
+            String description_to_save = description.getText().toString();
+            Task task = new Task(task_name_to_save, description_to_save);
 
-        TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-        taskDbHelper.save(task);
-        finish();
+            TaskDbHelper taskDbHelper = new TaskDbHelper(this);
+            taskDbHelper.save(task);
+            finish();
+        }
     }
 }

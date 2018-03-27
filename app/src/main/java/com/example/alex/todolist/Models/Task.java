@@ -22,7 +22,11 @@ public class Task implements Serializable {
     }
 
     public Task(String taskName, String description) {
-        this.taskName = taskName;
+        if (taskName.trim().equals("") || taskName.isEmpty()) {
+            this.taskName = null;
+        } else {
+            this.taskName = taskName;
+        }
         this.description = description;
         this.completed = false;
         this.pinned = false;
