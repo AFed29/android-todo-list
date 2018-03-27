@@ -24,11 +24,13 @@ public class TasksRecyclerAdapter extends RecyclerView.Adapter<TasksRecyclerAdap
     public class TasksViewHolder extends RecyclerView.ViewHolder {
         public TextView taskName;
         public ToggleButton completedToggle;
+        public ToggleButton pinnedToggle;
 
         public TasksViewHolder(View view) {
             super(view);
             taskName = view.findViewById(R.id.taskName);
             completedToggle = view.findViewById(R.id.completed_toggle);
+            pinnedToggle = view.findViewById(R.id.pinned_toggle);
         }
     }
 
@@ -46,9 +48,12 @@ public class TasksRecyclerAdapter extends RecyclerView.Adapter<TasksRecyclerAdap
     public void onBindViewHolder(TasksViewHolder holder, int position) {
         Task currentTask = tasks.get(position);
         holder.taskName.setText(currentTask.getTaskName());
-        holder.itemView.setTag(currentTask);
         holder.completedToggle.setChecked(currentTask.getCompleted());
+        holder.pinnedToggle.setChecked(currentTask.getPinned());
+
+        holder.itemView.setTag(currentTask);
         holder.completedToggle.setTag(currentTask);
+        holder.pinnedToggle.setTag(currentTask);
     }
 
     @Override

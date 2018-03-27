@@ -8,13 +8,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 
 import com.example.alex.todolist.Adapters.TasksRecyclerAdapter;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
 import com.example.alex.todolist.Database.TaskDbHelper;
-import com.example.alex.todolist.Adapters.TasksAdapter;
 
 import java.util.ArrayList;
 
@@ -32,7 +30,8 @@ public class ToDoListActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.tasks_list);
         taskDbHelper = new TaskDbHelper(this);
-        }
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+    }
 
     @Override
     protected void onResume() {
@@ -48,9 +47,8 @@ public class ToDoListActivity extends AppCompatActivity {
         tasksRecyclerAdapter = new TasksRecyclerAdapter(tasks);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(tasksRecyclerAdapter);
-        
     }
 
     public void onAddTaskButtonClicked(View view) {
@@ -69,7 +67,13 @@ public class ToDoListActivity extends AppCompatActivity {
         Task task = (Task) view.getTag();
         task.flipCompleted();
         taskDbHelper.update(task);
-        tasksRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    public void onPinnedChanged(View view) {
+        Task task = (Task) view.getTag();
+        task.flipPinned();
+        taskDbHelper.update(task);
+        refreshUI();
     }
 }
 

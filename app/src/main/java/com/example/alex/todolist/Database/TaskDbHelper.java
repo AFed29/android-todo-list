@@ -25,14 +25,15 @@ public class TaskDbHelper extends DBHelper {
 
         values.put(TaskContract.COLUMN_NAME_TASKNAME, task.getTaskName());
         values.put(TaskContract.COLUMN_NAME_DESCRIPTION, task.getDescription());
-        values.put(TaskContract.COLUMN_NAME_COMPLETED, 0);
+        values.put(TaskContract.COLUMN_NAME_COMPLETED, task.getCompleted());
+        values.put(TaskContract.COLUMN_NAME_PINNED, task.getPinned());
 
         db.insert(TaskContract.TABLE_NAME, null, values);
     }
 
     public ArrayList<Task> selectAll() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sortOrder = TaskContract._ID + " DESC";
+        String sortOrder = TaskContract.COLUMN_NAME_PINNED + " DESC, " + TaskContract._ID + " DESC";
         Cursor cursor = db.query(TaskContract.TABLE_NAME, null, null, null, null, null, sortOrder);
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -45,7 +46,9 @@ public class TaskDbHelper extends DBHelper {
                     cursor.getColumnIndexOrThrow(TaskContract.COLUMN_NAME_DESCRIPTION));
             int completed = cursor.getInt(
                     cursor.getColumnIndexOrThrow(TaskContract.COLUMN_NAME_COMPLETED));
-            Task task = new Task(id, taskName, taskDescription, completed);
+            int pinned = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(TaskContract.COLUMN_NAME_PINNED));
+            Task task = new Task(id, taskName, taskDescription, completed, pinned);
             tasks.add(task);
         }
         return tasks;
@@ -57,8 +60,9 @@ public class TaskDbHelper extends DBHelper {
         values.put(TaskContract.COLUMN_NAME_TASKNAME, task.getTaskName());
         values.put(TaskContract.COLUMN_NAME_DESCRIPTION, task.getDescription());
         values.put(TaskContract.COLUMN_NAME_COMPLETED, task.getCompleted());
+        values.put(TaskContract.COLUMN_NAME_PINNED, task.getPinned());
 
-        String selection = TaskContract._ID + " LIKE ?";
+        String selection = TaskContract._ID + " = ?";
         String[] selectionArgs = { task.getId().toString() };
 
         db.update(TaskContract.TABLE_NAME, values, selection, selectionArgs);
@@ -67,7 +71,7 @@ public class TaskDbHelper extends DBHelper {
     public void deleteOne(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String selection = TaskContract._ID + " LIKE ?";
+        String selection = TaskContract._ID + " = ?";
         String[] selectionArgs = { task.getId().toString() };
 
         db.delete(TaskContract.TABLE_NAME, selection, selectionArgs);

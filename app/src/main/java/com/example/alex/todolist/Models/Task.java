@@ -11,18 +11,21 @@ public class Task implements Serializable {
     private String taskName;
     private String description;
     private boolean completed;
+    private boolean pinned;
 
-    public Task(int id, String taskName, String description, int completed) {
+    public Task(int id, String taskName, String description, int completed, int pinned) {
         this.id = id;
         this.taskName = taskName;
         this.description = description;
         this.completed = completed == 1;
+        this.pinned = pinned == 1;
     }
 
     public Task(String taskName, String description) {
         this.taskName = taskName;
         this.description = description;
         this.completed = false;
+        this.pinned = false;
     }
 
     public String getTaskName() {
@@ -51,5 +54,13 @@ public class Task implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean getPinned() {
+        return pinned;
+    }
+
+    public void flipPinned() {
+        this.pinned = !this.pinned;
     }
 }
