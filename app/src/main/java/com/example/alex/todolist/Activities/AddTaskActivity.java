@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -82,6 +84,8 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
             Task task = new Task(task_name_to_save, description_to_save, reminderDateTime);
 
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, TaskInfoActivity.class), PendingIntent.FLAG_ONE_SHOT);
+                //This will be used for the alarm manager
             TaskDbHelper taskDbHelper = new TaskDbHelper(this);
             taskDbHelper.save(task);
             finish();

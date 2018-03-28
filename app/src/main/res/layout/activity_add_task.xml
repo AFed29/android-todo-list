@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onDateClicked"
     tools:context="com.example.alex.todolist.Activities.AddTaskActivity">
 
     <EditText
@@ -17,6 +16,7 @@
         android:ems="10"
         android:hint="@string/task_name_text"
         android:inputType="textCapWords"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,6 +31,7 @@
         android:ems="10"
         android:hint="@string/description_hint_text"
         android:inputType="textMultiLine|textCapSentences"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +58,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
         android:hint="Click to set reminder"
+        android:onClick="onDateClicked"
+        android:textColor="@color/textColor"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_description_input" />
