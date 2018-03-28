@@ -14,6 +14,7 @@ public final class TaskContract implements BaseColumns  {
     static final String COLUMN_NAME_DESCRIPTION = "description";
     static final String COLUMN_NAME_COMPLETED = "completed";
     static final String COLUMN_NAME_PINNED = "pinned";
+    static final String COLUMN_NAME_REMINDER_DATE_TIME = "reminder_date_time";
 
     static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TaskContract.TABLE_NAME + " (" +
@@ -21,7 +22,8 @@ public final class TaskContract implements BaseColumns  {
                     TaskContract.COLUMN_NAME_TASKNAME + " TEXT NOT NULL," +
                     TaskContract.COLUMN_NAME_DESCRIPTION + " TEXT," +
                     TaskContract.COLUMN_NAME_COMPLETED + " INTEGER," +
-                    TaskContract.COLUMN_NAME_PINNED + " INTEGER)";
+                    TaskContract.COLUMN_NAME_PINNED + " INTEGER," +
+                    TaskContract.COLUMN_NAME_REMINDER_DATE_TIME + " INTEGER)";
 
 
     static final String SQL_DELETE_ENTRIES =

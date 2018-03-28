@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onDateClicked"
     tools:context="com.example.alex.todolist.Activities.AddTaskActivity">
 
     <EditText
@@ -28,6 +29,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
         android:ems="10"
+        android:hint="@string/description_hint_text"
         android:inputType="textMultiLine|textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -38,11 +40,23 @@
         android:id="@+id/save_task"
         android:layout_width="82dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:onClick="onAddTaskButtonClick"
+        android:onClick="onAddTaskButtonClicked"
         android:text="@string/save_task_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/date_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:hint="Click to set reminder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_description_input" />
