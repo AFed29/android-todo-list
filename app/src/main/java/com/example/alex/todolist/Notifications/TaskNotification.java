@@ -50,7 +50,7 @@ public class TaskNotification {
         builder.setPriority(Notification.PRIORITY_HIGH);
         if (Build.VERSION.SDK_INT >= 21) builder.setVibrate(new long[0]);
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        builder.setLights(Color.BLUE, 500, 500);
+        builder.setLights(Color.MAGENTA, 500, 500);
         builder.setVibrate(new long[] {0, 500, 500});
         return builder.build();
     }

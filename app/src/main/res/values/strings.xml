@@ -6,4 +6,5 @@
     <string name="edit_switch_text">Edit?</string>
     <string name="update_task_button_text">Update Task</string>
     <string name="description_hint_text">Task Description</string>
+    <string name="click_to_set_reminder_hint">Click to set reminder</string>
 </resources>

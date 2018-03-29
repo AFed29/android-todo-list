@@ -57,7 +57,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
-        android:hint="Click to set reminder"
+        android:hint="@string/click_to_set_reminder_hint"
         android:onClick="onDateClicked"
         android:textColor="@color/textColor"
         android:textSize="18sp"
@@ -67,16 +67,18 @@
 
     <ImageButton
         android:id="@+id/time_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="53dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@null"
         android:onClick="onDateTimeDeleteClicked"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/date_add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toEndOf="@+id/date_add"
         app:layout_constraintTop_toTopOf="@+id/date_add"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@drawable/x_icon" />
 
 </android.support.constraint.ConstraintLayout>

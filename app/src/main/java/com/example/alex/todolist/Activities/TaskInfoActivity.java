@@ -127,27 +127,32 @@ public class TaskInfoActivity extends AppCompatActivity implements DatePickerDia
             String edited_name = taskName.getText().toString();
             String edited_description = taskDescription.getText().toString();
 
-            task.setName(edited_name);
-            task.setDescription(edited_description);
-            task.setReminderDateTime(reminderDateTime);
+            if (edited_name.trim().equals("") || edited_name.isEmpty()) {
+                Toast.makeText(this, "Please Enter a task name", Toast.LENGTH_LONG).show();
+            } else {
 
-            taskDbHelper.update(task);
+                task.setName(edited_name);
+                task.setDescription(edited_description);
+                task.setReminderDateTime(reminderDateTime);
 
-            if (reminderDateTime != null) {
-                Notification notification = TaskNotification.notification(this, task);
-                Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, task.getId());
-                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                taskDbHelper.update(task);
 
-                AlarmManager alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
+                if (reminderDateTime != null) {
+                    Notification notification = TaskNotification.notification(this, task);
+                    Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+                    notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, task.getId());
+                    notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                alarmManager.cancel(pendingIntent);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
+                    AlarmManager alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
+
+                    alarmManager.cancel(pendingIntent);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
+                }
+
+                Toast.makeText(this, task.getTaskName() + " updated", Toast.LENGTH_LONG).show();
+                finish();
             }
-
-            Toast.makeText(this, task.getTaskName() + " updated", Toast.LENGTH_LONG).show();
-            finish();
         } else {
             editing = true;
             updateButton.setText(R.string.update_task_button_text);
