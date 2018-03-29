@@ -3,12 +3,12 @@ package com.example.alex.todolist.Activities;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.alex.todolist.Fragments.DatePickerFragment;
 import com.example.alex.todolist.Fragments.TimePickerFragment;
+import com.example.alex.todolist.Notifications.NotificationPublisher;
+import com.example.alex.todolist.Notifications.TaskNotification;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
 import com.example.alex.todolist.Database.TaskDbHelper;
@@ -29,7 +31,6 @@ import com.example.alex.todolist.Utilities.ByteConverter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class AddTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     EditText task_name;
@@ -88,22 +89,26 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
             Task task = new Task(task_name_to_save, description_to_save, reminderDateTime);
 
-            if (reminderDateTime != null) {
-                Intent intent = new Intent(this, TaskInfoActivity.class);
-                try {
-                    intent.putExtra("byte", ByteConverter.serialize(task));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            TaskDbHelper taskDbHelper = new TaskDbHelper(this);
+            long id = taskDbHelper.save(task);
 
-                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), task.getId(), intent, PendingIntent.FLAG_ONE_SHOT);
+            task.setId((int) id);
+
+            if (reminderDateTime != null) {
+
+
+                Notification notification = TaskNotification.notification(this, task);
+
+                Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
                 AlarmManager alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
             }
-            
-            TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-            taskDbHelper.save(task);
             finish();
         }
     }

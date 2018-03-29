@@ -83,4 +83,8 @@ public class Task implements Serializable {
             return null;
         }
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

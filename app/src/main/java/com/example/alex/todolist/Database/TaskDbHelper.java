@@ -20,7 +20,7 @@ public class TaskDbHelper extends DBHelper {
         super(context);
     }
 
-    public void save(Task task) {
+    public long save(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -30,7 +30,7 @@ public class TaskDbHelper extends DBHelper {
         values.put(TaskContract.COLUMN_NAME_PINNED, task.getPinned());
         values.put(TaskContract.COLUMN_NAME_REMINDER_DATE_TIME, task.getReminderDateTime());
 
-        db.insert(TaskContract.TABLE_NAME, null, values);
+        return db.insert(TaskContract.TABLE_NAME, null, values);
     }
 
     public ArrayList<Task> selectAll() {
