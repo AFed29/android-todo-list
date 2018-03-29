@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alex.todolist.Database.TaskDbHelper;
 import com.example.alex.todolist.R;
@@ -89,6 +90,8 @@ public class TaskInfoActivity extends AppCompatActivity {
             task.setDescription(edited_description);
 
             taskDbHelper.update(task);
+
+            Toast.makeText(this, task.getTaskName() + " updated", Toast.LENGTH_LONG).show();
             finish();
         } else {
             editing = true;

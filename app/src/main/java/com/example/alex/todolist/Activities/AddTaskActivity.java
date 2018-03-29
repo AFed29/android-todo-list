@@ -100,7 +100,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
                 Notification notification = TaskNotification.notification(this, task);
 
                 Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, task.getId());
                 notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -109,6 +109,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
             }
+            Toast.makeText(this, task.getTaskName() + " added", Toast.LENGTH_LONG).show();
             finish();
         }
     }

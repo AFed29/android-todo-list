@@ -18,6 +18,7 @@ import com.example.alex.todolist.R;
 import com.example.alex.todolist.Utilities.ByteConverter;
 
 import java.io.IOException;
+import java.nio.channels.Channel;
 
 /**
  * Created by Alex on 29/03/2018.
@@ -37,7 +38,7 @@ public class TaskNotification {
         PendingIntent pendingIntent = TaskStackBuilder.create(context)
                         .addNextIntentWithParentStack(mainActivityIntent)
                         .addNextIntent(intent)
-                        .getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+                        .getPendingIntent(task.getId(), PendingIntent.FLAG_ONE_SHOT);
 
 
         Notification.Builder builder = new Notification.Builder(context);
@@ -45,10 +46,12 @@ public class TaskNotification {
         builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) builder.setGroup("Tasks");
         builder.setPriority(Notification.PRIORITY_HIGH);
         if (Build.VERSION.SDK_INT >= 21) builder.setVibrate(new long[0]);
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         return builder.build();
+
     }
 
 }
