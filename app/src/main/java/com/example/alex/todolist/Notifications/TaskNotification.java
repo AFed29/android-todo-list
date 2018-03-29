@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -41,7 +42,7 @@ public class TaskNotification {
                         .getPendingIntent(task.getId(), PendingIntent.FLAG_ONE_SHOT);
 
 
-        Notification.Builder builder = new Notification.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle(task.getTaskName());
         builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setContentIntent(pendingIntent);
@@ -50,8 +51,9 @@ public class TaskNotification {
         builder.setPriority(Notification.PRIORITY_HIGH);
         if (Build.VERSION.SDK_INT >= 21) builder.setVibrate(new long[0]);
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        builder.setLights(Color.BLUE, 500, 500);
+        builder.setVibrate(new long[] {0, 500, 500});
         return builder.build();
-
     }
 
 }
