@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,21 +25,20 @@ import com.example.alex.todolist.Notifications.TaskNotification;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
 import com.example.alex.todolist.Database.TaskDbHelper;
-import com.example.alex.todolist.Utilities.ByteConverter;
 
-import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class AddTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    EditText task_name;
-    EditText description;
-    TextView date;
-    Calendar reminderDateTime;
-    Calendar temporaryCalendar;
-    SimpleDateFormat simpleDateFormat;
-    DialogFragment datePicker;
-    DialogFragment timePicker;
+    private EditText task_name;
+    private EditText description;
+    private TextView date;
+    private Calendar reminderDateTime;
+    private Calendar temporaryCalendar;
+    private SimpleDateFormat simpleDateFormat;
+    private DialogFragment datePicker;
+    private DialogFragment timePicker;
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -57,7 +55,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
     }
 
     public void onDateClicked(View view) {
-        datePicker = new DatePickerFragment(this);
+        datePicker = new DatePickerFragment(this, Calendar.getInstance());
         datePicker.show(this.getFragmentManager(), "datePicker");
     }
 
@@ -68,7 +66,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         temporaryCalendar.set(Calendar.YEAR, year);
         temporaryCalendar.set(Calendar.MONTH, month);
         temporaryCalendar.set(Calendar.DAY_OF_MONTH, day);
-        timePicker = new TimePickerFragment(this);
+        timePicker = new TimePickerFragment(this, Calendar.getInstance());
         timePicker.show(this.getFragmentManager(), "timePicker");
     }
 
@@ -95,8 +93,6 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
             task.setId((int) id);
 
             if (reminderDateTime != null) {
-
-
                 Notification notification = TaskNotification.notification(this, task);
 
                 Intent notificationIntent = new Intent(this, NotificationPublisher.class);

@@ -1,8 +1,7 @@
 package com.example.alex.todolist.Notifications;
 
-import android.app.AlarmManager;
+
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
@@ -19,7 +18,7 @@ import com.example.alex.todolist.R;
 import com.example.alex.todolist.Utilities.ByteConverter;
 
 import java.io.IOException;
-import java.nio.channels.Channel;
+
 
 /**
  * Created by Alex on 29/03/2018.

@@ -1,11 +1,9 @@
 package com.example.alex.todolist.Fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import java.util.Calendar;
@@ -18,15 +16,15 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment {
 
     private DatePickerDialog.OnDateSetListener onDateSetListener;
+    private Calendar calendar;
 
-
-    public DatePickerFragment(DatePickerDialog.OnDateSetListener dateSetListener) {
+    public DatePickerFragment(DatePickerDialog.OnDateSetListener dateSetListener, Calendar calendar) {
         this.onDateSetListener = dateSetListener;
+        this.calendar = calendar;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);

@@ -18,9 +18,9 @@ import java.util.ArrayList;
 
 public class ToDoListActivity extends AppCompatActivity {
 
-    TaskDbHelper taskDbHelper;
+    private TaskDbHelper taskDbHelper;
     ArrayList<Task> tasks;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     TasksRecyclerAdapter tasksRecyclerAdapter;
 
     @Override

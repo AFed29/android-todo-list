@@ -87,4 +87,8 @@ public class Task implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setReminderDateTime(Calendar reminderDateTime) {
+        this.reminderDateTime = reminderDateTime;
+    }
 }
