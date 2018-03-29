@@ -64,4 +64,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_description_input" />
+
+    <ImageButton
+        android:id="@+id/time_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="onDateTimeDeleteClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/date_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toEndOf="@+id/date_add"
+        app:layout_constraintTop_toTopOf="@+id/date_add"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
 </android.support.constraint.ConstraintLayout>

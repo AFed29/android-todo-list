@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.example.alex.todolist.Database.TaskDbHelper;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
+import com.example.alex.todolist.Utilities.ByteConverter;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -37,7 +39,19 @@ public class TaskInfoActivity extends AppCompatActivity {
         temporary = Calendar.getInstance();
 
         Intent intent = getIntent();
-        task = (Task) intent.getSerializableExtra("task");
+        if (intent.getByteArrayExtra("byte") != null) {
+            try {
+                task = (Task) ByteConverter.deserialize(intent.getByteArrayExtra("byte"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            task = (Task) intent.getSerializableExtra("task");
+        }
+
+
 
         taskDbHelper = new TaskDbHelper(this);
 
@@ -46,7 +60,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         reminderDateTime = findViewById(R.id.reminder_info_view);
         updateButton = findViewById(R.id.update_button);
 
-        task_name.setText(task.getTaskName());
+         task_name.setText(task.getTaskName());
         task_description.setText(task.getDescription());
         if (task.getReminderDateTime() != null) {
             Long utcNumber = task.getReminderDateTime();

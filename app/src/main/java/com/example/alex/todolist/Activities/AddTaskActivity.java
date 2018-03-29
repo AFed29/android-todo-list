@@ -1,11 +1,13 @@
 package com.example.alex.todolist.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +24,9 @@ import com.example.alex.todolist.Fragments.TimePickerFragment;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
 import com.example.alex.todolist.Database.TaskDbHelper;
+import com.example.alex.todolist.Utilities.ByteConverter;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -84,11 +88,28 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
             Task task = new Task(task_name_to_save, description_to_save, reminderDateTime);
 
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, TaskInfoActivity.class), PendingIntent.FLAG_ONE_SHOT);
-                //This will be used for the alarm manager
+            if (reminderDateTime != null) {
+                Intent intent = new Intent(this, TaskInfoActivity.class);
+                try {
+                    intent.putExtra("byte", ByteConverter.serialize(task));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), task.getId(), intent, PendingIntent.FLAG_ONE_SHOT);
+                AlarmManager alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
+            }
+            
             TaskDbHelper taskDbHelper = new TaskDbHelper(this);
             taskDbHelper.save(task);
             finish();
         }
+    }
+
+    public void onDateTimeDeleteClicked(View view) {
+        reminderDateTime = null;
+        date.setText(null);
     }
 }
