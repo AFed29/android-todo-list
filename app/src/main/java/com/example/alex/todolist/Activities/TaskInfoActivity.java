@@ -1,12 +1,8 @@
 package com.example.alex.todolist.Activities;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,8 +17,7 @@ import android.widget.Toast;
 import com.example.alex.todolist.Database.TaskDbHelper;
 import com.example.alex.todolist.Fragments.DatePickerFragment;
 import com.example.alex.todolist.Fragments.TimePickerFragment;
-import com.example.alex.todolist.Notifications.NotificationPublisher;
-import com.example.alex.todolist.Notifications.TaskNotification;
+import com.example.alex.todolist.Notifications.TaskReminderCreator;
 import com.example.alex.todolist.R;
 import com.example.alex.todolist.Models.Task;
 import com.example.alex.todolist.Utilities.ByteConverter;
@@ -65,8 +60,6 @@ public class TaskInfoActivity extends AppCompatActivity implements DatePickerDia
         } else {
             task = (Task) intent.getSerializableExtra("task");
         }
-
-
 
         taskDbHelper = new TaskDbHelper(this);
 
@@ -138,19 +131,12 @@ public class TaskInfoActivity extends AppCompatActivity implements DatePickerDia
                 taskDbHelper.update(task);
 
                 if (reminderDateTime != null) {
-                    Notification notification = TaskNotification.notification(this, task);
-                    Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-                    notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, task.getId());
-                    notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    TaskReminderCreator.createReminder(this, task);
+                    Toast.makeText(this, task.getTaskName() + " updated. Reminder at \n" + reminderDateTimeTextView.getText().toString(), Toast.LENGTH_LONG).show();
 
-                    AlarmManager alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
-
-                    alarmManager.cancel(pendingIntent);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
+                } else {
+                    Toast.makeText(this, task.getTaskName() + " updated", Toast.LENGTH_LONG).show();
                 }
-
-                Toast.makeText(this, task.getTaskName() + " updated", Toast.LENGTH_LONG).show();
                 finish();
             }
         } else {
