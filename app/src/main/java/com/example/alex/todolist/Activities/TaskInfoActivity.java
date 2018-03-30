@@ -29,7 +29,7 @@ import java.util.Calendar;
 public class TaskInfoActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private EditText taskName, taskDescription;
-    private TextView reminderDateTimeTextView;
+    private TextView reminderDateTimeTextView, editReminderTextView;
     private Task task;
     boolean editing;
     private Button updateButton;
@@ -38,6 +38,7 @@ public class TaskInfoActivity extends AppCompatActivity
     private Calendar displayTemp;
     private Calendar temporaryCalendar;
     private Calendar reminderDateTime;
+    private Calendar pickerCalendar;
     private DialogFragment datePicker;
     private DialogFragment timePicker;
 
@@ -68,6 +69,7 @@ public class TaskInfoActivity extends AppCompatActivity
         taskDescription = findViewById(R.id.task_description_info);
         reminderDateTimeTextView = findViewById(R.id.reminder_info_view);
         updateButton = findViewById(R.id.update_button);
+        editReminderTextView = findViewById(R.id.edit_reminder_text_view);
 
         taskName.setText(task.getTaskName());
         taskDescription.setText(task.getDescription());
@@ -78,6 +80,7 @@ public class TaskInfoActivity extends AppCompatActivity
             reminderDateTimeTextView.setText(simpleDateFormat.format(displayTemp.getTime()));
         } else {
             reminderDateTimeTextView.setText(null);
+            editReminderTextView.setVisibility(View.INVISIBLE);
         }
 
         editing = false;
@@ -91,10 +94,13 @@ public class TaskInfoActivity extends AppCompatActivity
     }
 
     public void onDateClicked(View view) {
-        if (editing) {
-            datePicker = new DatePickerFragment(this, displayTemp);
-            datePicker.show(this.getFragmentManager(), "datePicker");
+        if (displayTemp != null) {
+            pickerCalendar = displayTemp;
+        } else {
+            pickerCalendar = Calendar.getInstance();
         }
+        datePicker = new DatePickerFragment(this, pickerCalendar);
+        datePicker.show(this.getFragmentManager(), "datePicker");
     }
 
     @Override
@@ -104,7 +110,7 @@ public class TaskInfoActivity extends AppCompatActivity
         temporaryCalendar.set(Calendar.YEAR, year);
         temporaryCalendar.set(Calendar.MONTH, month);
         temporaryCalendar.set(Calendar.DAY_OF_MONTH, day);
-        timePicker = new TimePickerFragment(this, displayTemp);
+        timePicker = new TimePickerFragment(this, pickerCalendar);
         timePicker.show(this.getFragmentManager(), "timePicker");
     }
 
