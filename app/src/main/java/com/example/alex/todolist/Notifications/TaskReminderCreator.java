@@ -13,15 +13,19 @@ public class TaskReminderCreator {
 
     public static void createReminder(Context context , Task task) {
         Notification notification = TaskNotification.notification(context, task);
+
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, task.getId());
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, task.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, task.getId(),
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) (context.getSystemService(Context.ALARM_SERVICE));
-
-        alarmManager.cancel(pendingIntent);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
-}
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, task.getReminderDateTime(), pendingIntent);
+        }
+    }
 
 }

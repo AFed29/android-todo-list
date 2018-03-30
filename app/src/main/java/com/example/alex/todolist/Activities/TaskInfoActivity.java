@@ -26,7 +26,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class TaskInfoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class TaskInfoActivity extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private EditText taskName, taskDescription;
     private TextView reminderDateTimeTextView;
     private Task task;
@@ -132,10 +133,12 @@ public class TaskInfoActivity extends AppCompatActivity implements DatePickerDia
 
                 if (reminderDateTime != null) {
                     TaskReminderCreator.createReminder(this, task);
-                    Toast.makeText(this, task.getTaskName() + " updated. Reminder at \n" + reminderDateTimeTextView.getText().toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, task.getTaskName() + " updated. Reminder at \n" +
+                            reminderDateTimeTextView.getText().toString(), Toast.LENGTH_LONG).show();
 
                 } else {
-                    Toast.makeText(this, task.getTaskName() + " updated", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, task.getTaskName() +
+                            " updated", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }

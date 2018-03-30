@@ -25,7 +25,8 @@ import com.example.alex.todolist.Database.TaskDbHelper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class AddTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class AddTaskActivity extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private EditText task_name;
     private EditText description;
     private TextView date;
@@ -89,7 +90,8 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
             if (reminderDateTime != null) {
                 TaskReminderCreator.createReminder(this, task);
-                Toast.makeText(this, task.getTaskName() + " added with reminder at \n" + date.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, task.getTaskName() +
+                        " added with reminder at \n" + date.getText().toString(), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, task.getTaskName() + " added", Toast.LENGTH_LONG).show();
             }

@@ -36,7 +36,9 @@ public class TaskDbHelper extends DBHelper {
     public ArrayList<Task> selectAll() {
         SQLiteDatabase db = this.getReadableDatabase();
         String sortOrder = TaskContract.COLUMN_NAME_PINNED + " DESC, " + TaskContract._ID + " DESC";
-        Cursor cursor = db.query(TaskContract.TABLE_NAME, null, null, null, null, null, sortOrder);
+        Cursor cursor =
+                db.query(TaskContract.TABLE_NAME, null, null,
+                        null, null, null, sortOrder);
         ArrayList<Task> tasks = new ArrayList<>();
 
         while (cursor.moveToNext()) {
